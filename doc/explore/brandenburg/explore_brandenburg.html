@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jonathan Jupke">
+
+<title>explore brandenburg pesticide data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="explore_brandenburg_files/libs/clipboard/clipboard.min.js"></script>
+<script src="explore_brandenburg_files/libs/quarto-html/quarto.js"></script>
+<script src="explore_brandenburg_files/libs/quarto-html/popper.min.js"></script>
+<script src="explore_brandenburg_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="explore_brandenburg_files/libs/quarto-html/anchor.min.js"></script>
+<link href="explore_brandenburg_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="explore_brandenburg_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="explore_brandenburg_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="explore_brandenburg_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="explore_brandenburg_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="explore_brandenburg_files/libs/ionrangeslider-javascript-2.3.1/js/ion.rangeSlider.min.js"></script>
+<script src="explore_brandenburg_files/libs/strftime-0.9.2/strftime-min.js"></script>
+<link href="explore_brandenburg_files/libs/ionrangeslider-css-2.3.1/css/ion.rangeSlider.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="explore_brandenburg_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="explore_brandenburg_files/libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="explore_brandenburg_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="explore_brandenburg_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="explore_brandenburg_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="explore_brandenburg_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="explore_brandenburg_files/libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="explore_brandenburg_files/libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<link href="explore_brandenburg_files/libs/HomeButton-0.0.1/home-button.css" rel="stylesheet">
+<script src="explore_brandenburg_files/libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="explore_brandenburg_files/libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="explore_brandenburg_files/libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="explore_brandenburg_files/libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet">
+<link href="explore_brandenburg_files/libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">explore brandenburg pesticide data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jonathan Jupke </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="bins-label" for="bins">Binwidth:</label>
+<input class="js-range-slider" id="bins" data-skin="shiny" data-min="1" data-max="50" data-from="30" data-step="1" data-grid="true" data-grid-num="9.8" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div id="distPlot" class="shiny-plot-output" style="width:100%;height:400px;"></div>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p>How many samples?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4588</code></pre>
+</div>
+</div>
+<p>How many sites?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120</code></pre>
+</div>
+</div>
+<p>How many samples per site?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_brandenburg_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>When does sampling occur?</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="explore_brandenburg_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How many compounds per sample?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_brandenburg_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How many different compounds?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 147</code></pre>
+</div>
+</div>
+<p>How often does each compound occur?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_brandenburg_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="font-size: 8px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> compound </th>
+   <th style="text-align:right;"> n.occur </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Ibuprofen </td>
+   <td style="text-align:right;"> 2308 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mecoprop </td>
+   <td style="text-align:right;"> 2265 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-D </td>
+   <td style="text-align:right;"> 2245 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dichlorprop </td>
+   <td style="text-align:right;"> 2140 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4,6-T </td>
+   <td style="text-align:right;"> 1981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,6-D </td>
+   <td style="text-align:right;"> 1981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bentazon </td>
+   <td style="text-align:right;"> 1976 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,6-DP </td>
+   <td style="text-align:right;"> 1887 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,6-MCPP </td>
+   <td style="text-align:right;"> 1887 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4,5-TP </td>
+   <td style="text-align:right;"> 1885 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MCPA </td>
+   <td style="text-align:right;"> 1846 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4,6-TP </td>
+   <td style="text-align:right;"> 1814 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bromoxynil </td>
+   <td style="text-align:right;"> 1719 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Nicosulfuron </td>
+   <td style="text-align:right;"> 1406 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Terbutryn </td>
+   <td style="text-align:right;"> 1400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sulcotrion </td>
+   <td style="text-align:right;"> 1374 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Isoproturon </td>
+   <td style="text-align:right;"> 1348 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Imidacloprid </td>
+   <td style="text-align:right;"> 1335 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cybutryn </td>
+   <td style="text-align:right;"> 1313 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Simazin </td>
+   <td style="text-align:right;"> 1312 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor </td>
+   <td style="text-align:right;"> 1271 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Terbuthylazin </td>
+   <td style="text-align:right;"> 1255 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metazachlor </td>
+   <td style="text-align:right;"> 1240 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chlortoluron </td>
+   <td style="text-align:right;"> 1100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Diflufenican </td>
+   <td style="text-align:right;"> 961 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Diuron </td>
+   <td style="text-align:right;"> 935 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alachlor </td>
+   <td style="text-align:right;"> 907 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atrazin </td>
+   <td style="text-align:right;"> 907 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Flufenacet </td>
+   <td style="text-align:right;"> 881 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dimoxystrobin </td>
+   <td style="text-align:right;"> 867 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Flurtamone </td>
+   <td style="text-align:right;"> 867 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fenpropimorph </td>
+   <td style="text-align:right;"> 846 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aminomethylphosphonsäure(AMPA) </td>
+   <td style="text-align:right;"> 796 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Glyphosat </td>
+   <td style="text-align:right;"> 791 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Napropamid </td>
+   <td style="text-align:right;"> 773 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Carbendazim </td>
+   <td style="text-align:right;"> 717 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dimethachlor </td>
+   <td style="text-align:right;"> 710 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cypermethrin </td>
+   <td style="text-align:right;"> 698 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aclonifen </td>
+   <td style="text-align:right;"> 671 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bifenox </td>
+   <td style="text-align:right;"> 671 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Quinoxyfen </td>
+   <td style="text-align:right;"> 671 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ba-gelöst </td>
+   <td style="text-align:right;"> 623 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Triclosan </td>
+   <td style="text-align:right;"> 553 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dichlorvos </td>
+   <td style="text-align:right;"> 509 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a-HCH_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b-HCH_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> d-HCH_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDD_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDE_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDT_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDD_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDE_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDT_S </td>
+   <td style="text-align:right;"> 456 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dicofol </td>
+   <td style="text-align:right;"> 449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chlorfenvinphos </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chlorpyrifos,ethyl </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chlorpyrifos,methyl </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dimethoat </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Trifluralin </td>
+   <td style="text-align:right;"> 271 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4-Chlorphenol </td>
+   <td style="text-align:right;"> 262 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2-Chlorphenol </td>
+   <td style="text-align:right;"> 256 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid cis_S&lt;2000µm </td>
+   <td style="text-align:right;"> 253 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid trans_S&lt;2000µm </td>
+   <td style="text-align:right;"> 253 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlor_S&lt;2000µm </td>
+   <td style="text-align:right;"> 253 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metribuzin </td>
+   <td style="text-align:right;"> 229 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a-Endosulfan </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a-HCH </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aldrin </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b-Endosulfan </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b-HCH </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> d-HCH </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dieldrin </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Endrin </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlor </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid, cis- </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid, trans- </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Isodrin </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Lindan </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDT </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDD </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4.4-DDE </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDT </td>
+   <td style="text-align:right;"> 201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Omethoat </td>
+   <td style="text-align:right;"> 190 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Diazinon </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etrimphos </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fenitrothion </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fenthion </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Malathion </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Parathion,ethyl </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Parathion,methyl </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Propyzamid </td>
+   <td style="text-align:right;"> 177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fluroxypyr </td>
+   <td style="text-align:right;"> 170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Quinmerac </td>
+   <td style="text-align:right;"> 170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chloridazon (Pyrazon) </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hexazinon </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Lenacil </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Linuron </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metamitron </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pirimicarb </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Propiconazol </td>
+   <td style="text-align:right;"> 142 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dicofol_Z </td>
+   <td style="text-align:right;"> 126 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Methabenzthiazuron </td>
+   <td style="text-align:right;"> 119 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ametryn </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bromacil </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Epoxiconazol </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Phoxim </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Picolinafen </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Prometryn </td>
+   <td style="text-align:right;"> 118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Monolinuron </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pendimethalin </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDD_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDE_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2,4-DDT_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDD_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDE_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4,4-DDT_Z </td>
+   <td style="text-align:right;"> 112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a-HCH_Z </td>
+   <td style="text-align:right;"> 111 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b-HCH_Z </td>
+   <td style="text-align:right;"> 111 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> d-HCH_Z </td>
+   <td style="text-align:right;"> 111 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metazachlor (ESA-Metabolit) </td>
+   <td style="text-align:right;"> 80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor ESA-Metabolit </td>
+   <td style="text-align:right;"> 74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dimethachlor CGA 354742 </td>
+   <td style="text-align:right;"> 68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dimethachlor CGA 369873 </td>
+   <td style="text-align:right;"> 68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metazachlor BH 479-4 </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor CGA 357704 </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor CGA 368208 </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor NOA 413173 </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Metolachlor OA </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid-cis_Z </td>
+   <td style="text-align:right;"> 58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlorepoxid-trans_Z </td>
+   <td style="text-align:right;"> 58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Heptachlor_Z </td>
+   <td style="text-align:right;"> 58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chloridazon-desphenyl </td>
+   <td style="text-align:right;"> 45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chloridazon-methyl desphenyl </td>
+   <td style="text-align:right;"> 45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Triclosan_Z </td>
+   <td style="text-align:right;"> 34 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Acetamiprid </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Clothianidin </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Thiacloprid </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Thiamethoxam </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cybutryn Metabolit 1 </td>
+   <td style="text-align:right;"> 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pethoxamid </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Foramsulfuron </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beta-Cyfluthrin </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bifenthrin </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cyfluthrin </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Esfenvalerat </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Methoxychlor </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Permethrin </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Map of samples</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="htmlwidget-9043d022bbc9b336bdd6" style="width:100%;height:464px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9043d022bbc9b336bdd6">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[[52.837375012205,52.419671626889,52.1735736137285,51.9333456157479,51.4516710328715,51.4678087297089,52.3207289949653,52.3590150819693,52.2965946188451,52.3172660916265,52.793007009178,53.1633949148781,53.1845773310379,53.0413372019713,53.0413372019713,52.4259579741508,51.4664501785635,51.5687511662471,51.5727372779101,52.5043698234798,52.1065520814653,52.010680389565,52.6835632330961,52.2608167076755,51.4644708322906,52.5729733367976,53.1091007119984,52.309108033625,52.7430625515869,51.4542901272664,52.7977609184582,52.6704175452158,52.6361002259716,52.4010427013992,52.4010427013992,52.4010427013992,52.4714642485052,52.4714642485052,52.4714642485052,52.3879880946229,52.8242039881911,52.842570487295,51.5618859380709,52.4088921790237,52.6834403910448,53.1263790777442,53.2158101460954,51.7271687497322,51.7434693885121,51.8588425106211,52.0804452790073,52.404771975673,51.5820506743168,51.9096227357225,52.0598493586633,52.0598493586633,52.0598493586633,52.299116582553,52.0088403778009,52.3617684228435,52.3930878695669,52.0701241285071,52.1453849620549,52.242640989683,52.3576519325426,52.3576519325426,52.3576519325426,52.3576519325426,52.8360201986128,52.8360201986128,52.8360201986128,52.8360201986128,53.1369924640663,52.070038382064,52.5786106074246,53.0346902496063,52.3716786435477,51.4690333643956,51.4660760847722,51.4483447079805,51.5172707860617,52.7551163732734,53.2180316599849,52.3844413926054,51.6067303393637,52.3127386299119,51.4902566742665,53.0430792220161,51.7114187691468,51.4644170159589,51.4629364769425,51.4598013905603,51.4553728287471,51.6949432875219,52.4150866282586,52.438429614979,51.5243108635927,51.5493500715146,51.7628290445961,51.7950406091945,52.0786193544837,52.1713920273484,52.1713920273484,52.3686217576529,52.3924415648689,53.3144546376835,53.1493502142383,53.0921660767554,52.9944492045443,53.1677977073909,53.2652377947292,52.7499143771871,52.748402835903,52.6653550192306,52.5792402912674,53.0100299895283,53.0984543754162,53.2477772356362,51.8854868353428,52.2913593744205],[13.9984759377305,14.4721532229979,12.676984415152,13.7000780381777,13.5503813655266,13.6643867595132,12.4397212433522,12.468278928812,13.6502544762673,13.6456202581551,12.261583559659,12.1289873923204,12.0884848730668,11.6358471503774,11.6358471503774,13.7526119084,13.6354310707074,14.6135951322442,14.6399242662202,13.7376486290801,14.2594649430629,14.7204743889526,12.7166300059572,14.5843706214838,13.6284071363625,12.9682712478556,14.3395345143465,12.4222582007315,13.2580039923414,13.5556670624109,13.2682936534979,13.230235052409,13.2153639848468,13.0734539752452,13.0734539752452,13.0734539752452,12.8279908961276,12.8279908961276,12.8279908961276,12.4952220109596,12.0766651803041,12.2389493282666,13.4817689877969,14.5251760605196,14.2425554154088,11.6860784931862,13.5152266076496,14.6204988675469,14.6039085311276,14.4190310167088,14.2359937384966,14.4900147257579,14.7295923061667,14.6923183342191,14.7558012362852,14.7558012362852,14.7558012362852,13.6311126350132,13.1132973403628,13.1170365927428,13.0736241235006,14.7975582988456,14.6794141104737,14.7049591619109,14.5518628890229,14.5518628890229,14.5518628890229,14.5518628890229,14.1226425307019,14.1226425307019,14.1226425307019,14.1226425307019,14.3826516316071,14.7569419836481,14.6282714160475,14.3117854562444,13.7097798132533,13.8577248253322,13.8915728881693,13.5166670161979,14.0201589272871,12.3195873652787,13.5466630021599,13.4525295035027,13.667621034994,13.1564707107498,14.078699659592,11.6478435981045,13.1992075445072,13.8958598976807,13.8697677726192,13.7395451524306,13.5249026263386,13.2460643892488,12.4937154282369,13.0471350532833,14.399110795411,14.3881084525938,14.341567546695,14.361906905748,13.8793820130672,14.2547623679181,14.2547623679181,13.9970529976808,13.7442691191788,12.258419865765,12.0089300397638,11.8719250504155,11.7767926146314,13.8457654180868,13.6185190554999,13.6857873298787,13.6591789958151,13.2146157961481,13.7372698483559,13.3170463578457,14.2981928937468,14.4335126556059,13.9468454596658,13.6461173917424],6,null,"sites.sf - n.sample",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"fill":true,"fillColor":["#491462","#36C86E","#00A392","#46236A","#234B84","#86D553","#412F72","#00558A","#008698","#4BCB69","#00A392","#412F72","#008F97","#4BCB69","#006992","#008698","#165087","#AADB41","#AADB41","#43296E","#86D553","#2C4681","#92D74D","#393B7A","#165087","#46236A","#00B289","#412F72","#3D3576","#4BCB69","#491462","#234B84","#00B686","#92D74D","#00C07B","#007395","#46236A","#007896","#33407D","#33407D","#00B289","#008F97","#46236A","#4BCB69","#86D553","#46236A","#46236A","#008F97","#481C66","#412F72","#46236A","#46236A","#393B7A","#92D74D","#00B983","#13C673","#007395","#165087","#46236A","#412F72","#009F94","#9ED947","#009F94","#008197","#E0E22B","#4BCB69","#007896","#3D3576","#92D74D","#5CCE64","#007896","#491462","#00A790","#481C66","#00A392","#008197","#008F97","#43296E","#00B686","#46236A","#481C66","#79D359","#46236A","#43296E","#46236A","#412F72","#3D3576","#46236A","#481C66","#009F94","#6BD05F","#165087","#5CCE64","#13C673","#491462","#3D3576","#008698","#007D97","#79D359","#46236A","#3D3576","#3D3576","#165087","#46236A","#E0E22B","#43296E","#43296E","#43296E","#00C377","#009B95","#46236A","#412F72","#00B686","#412F72","#46236A","#4BCB69","#00558A","#13C673","#46236A","#234B84"],"fillOpacity":[0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>AOD_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>2,4-D&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-09-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000400&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>9&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgAOD_00401&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  1&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>AZMFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-08&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgAZMFL_00102&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 80&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BAIB_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-23&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBAIB_001082&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 57&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BE_0035&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Imidacloprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-11&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000001&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBE_0035139&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>5&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BIGRE_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dichlorprop&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-11&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000230&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBIGRE_0010144&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 20&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>6&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BIGR_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-07&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBIGR_0030164&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 90&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>7&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BU_0100&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-19&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBU_0100250&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  8&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>BU_0130&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-20&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgBU_0130255&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 24&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>9&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>DA_0100&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-04&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgDA_0100275&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 43&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>10&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>DA_0110&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-13&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgDA_0110318&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 82&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>11&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>DOS_0080&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgDOS_0080389&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 58&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>12&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>DÖ_0022&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Triclosan&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000030&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000006&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgDÖ_0022220&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  9&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>13&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>EB_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-01&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgEB_0010426&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 47&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>14&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>EL_0040_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0103000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000305&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgEL_0040_S463&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 82&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>15&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>EL_0040_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0076400&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000300&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgEL_0040_S_Z530&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 32&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>16&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FLAFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Triclosan&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-04-24&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000150&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000030&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFLAFL_0010550&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 43&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>17&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FLOGR_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dichlorprop&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFLOGR_0030229&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 21&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>18&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FÖFL_0025&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-20&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0450000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFÖFL_0025579&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 96&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>19&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FÖFL_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-20&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0530000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFÖFL_0030579&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 97&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>20&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FREFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dimethachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-06&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFREFL_0010266&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  6&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>21&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>FRLFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-23&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgFRLFL_001082&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 91&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>22&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>GBMFL_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgGBMFL_0030284&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 17&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>23&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>GHHK_0070&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-01-31&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgGHHK_0070720&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 92&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>24&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>GR15_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgGR15_0030306&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 12&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>25&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HAMGR_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dichlorprop&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0002230&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHAMGR_0020229&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 22&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>26&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HK_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Imidacloprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000160&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000001&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHK_0020706&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>27&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HOFRIW1_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHOFRIW1_0020769&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 65&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>28&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HOGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-19&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHOGR_0010250&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  8&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>29&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HOWS_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001300&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHOWS_0010804&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 10&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>30&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HSGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-06&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHSGR_0010805&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 82&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>31&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0050&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-08-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0380000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0050347&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  1&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>32&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0070&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-18&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0070841&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 19&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>33&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0080&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-06-01&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0080234&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 67&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>34&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0110&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_011024&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 93&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>35&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0110_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0210000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000309&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0110_S463&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 73&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>36&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0110_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0203000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000305&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0110_S_Z530&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 35&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>37&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0195&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0008400&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0195306&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>38&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0195_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2019-03-29&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0010500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000304&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2019&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0195_S499&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 38&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>39&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0195_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dicofol_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0090700&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.005040&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0195_S_Z916&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 15&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>40&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0210&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-07-01&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>7&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0210766&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 15&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>41&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>HV_0260&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-02-18&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgHV_0260922&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 66&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>42&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>JÄ_0060&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgJÄ_0060389&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 47&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>43&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>KLEL_0060&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Carbendazim&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-02-21&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000020&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgKLEL_0060879&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>44&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>LEMFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-08&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgLEMFL_00102&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 82&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>45&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>LHGR_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgLHGR_0020601&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 91&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>46&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>LÖ(W)_0050&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-18&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgLÖ(W)_0050970&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>47&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>LYGW_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-12&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgLYGW_0010378&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  4&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>48&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>MAL1_0080&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-01-31&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgMAL1_0080720&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 48&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>49&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>MAL1_0090&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Beta-Cyfluthrin&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-31&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgMAL1_0090527&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  2&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>50&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>MAL2_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-27&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgMAL2_0020509&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  9&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>51&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>MÖLFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgMÖLFL_0010706&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>52&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>MÜLGRA_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-29&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgMÜLGRA_001043&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  4&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>53&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NE_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNE_001047&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 12&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>54&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NE_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Acetamiprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2019-02-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000045&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000009&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2019&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNE_0040453&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 92&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>55&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NE_0061&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNE_006147&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 70&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>56&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NE1_0061_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0008330&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000309&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNE1_0061_S463&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 77&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>57&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NE1_0061_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0005800&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000300&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNE1_0061_S_Z530&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 36&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>58&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NOTK1_0090&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNOTK1_0090284&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 22&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>59&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NU_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Imidacloprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-03-23&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000040&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000001&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNU_0020911&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>60&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NU_0110&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-25&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0004100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNU_0110878&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  9&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>61&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>NU_0120&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-01&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgNU_0120426&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 56&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>62&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0010L&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-08-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0410000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0010L989&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 94&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>63&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-08-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0380000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0020989&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 55&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>64&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0030769&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 41&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>65&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Ba-gelöst&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2019-02-04&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0470000&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.001000&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2019&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0040796&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>106&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>66&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0040_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0010600&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000308&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0040_S463&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 82&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>67&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0040_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000300&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0040_S_Z530&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 37&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>68&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0040_3&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-08-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0040_31011&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 10&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>69&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0070&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Acetamiprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2019-02-04&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000045&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000009&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2019&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0070796&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 93&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>70&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0070_S&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0004580&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000305&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0070_S463&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 83&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>71&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0070_S_Z&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_Z&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-01-26&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0001500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000300&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0070_S_Z530&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 38&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>72&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0070_3&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>2,4-D&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-08-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000670&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_0070_31031&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  1&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>73&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD_0090&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-17&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD_00901032&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 60&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>74&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD1_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD1_0010769&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  2&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>75&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD1_0060&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD1_0060769&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 57&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>76&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OD1_0080&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOD1_0080769&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 42&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>77&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>OSK_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-03-13&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgOSK_0010319&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 47&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>78&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>PEIGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dichlorprop&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-18&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0061250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgPEIGR_0010647&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  6&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>79&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>PÖ_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgPÖ_0020853&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 67&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>80&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>PUL_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgPUL_0040706&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>81&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>RAI_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Carbendazim&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-06-13&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000020&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgRAI_00101038&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  2&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>82&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>RH_0130&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-02-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgRH_0130739&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 88&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>83&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>ROBGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-03-24&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgROBGR_0010531&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>84&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>RUABGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Diuron&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-04-27&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000180&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgRUABGR_0010570&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  6&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>85&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SCHA_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Imidacloprid&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000001&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSCHA_00101079&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>86&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SCHEGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-25&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000600&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSCHEGR_0010878&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  9&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>87&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SCHLEGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Triclosan&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-04-11&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000150&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000030&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSCHLEGR_0010603&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 10&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>88&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SCHM_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-08&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSCHM_0010988&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>89&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SEFLGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-22&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSEFLGR_0010967&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  2&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>90&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SE_0030&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-03-23&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSE_0030671&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 56&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>91&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SE_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-16&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSE_0040853&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 85&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>92&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SE_0050&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Dichlorprop&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-05&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSE_0050229&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 21&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>93&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SE_0070&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-09&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSE_0070813&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 84&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>94&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SE_0100&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-22&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSE_0100986&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 77&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>95&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SILOK_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-08-20&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>8&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSILOK_0010142&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  1&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>96&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SPK_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-02-10&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0004500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSPK_0010704&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 10&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>97&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-11&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0010580&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 44&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>98&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Triclosan&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-04-11&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000150&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000030&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0020603&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 40&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>99&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0060&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-02-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0060739&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 88&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>100&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0070&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Carbendazim&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-02-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000020&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_00701035&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>101&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0130&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-04&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0130241&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 11&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>102&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0150&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-04&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0150241&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 11&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>103&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0150_S_F&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>a-HCH_S&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-01-30&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0007810&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000312&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/kg&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0150_S_F508&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 21&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>104&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0190&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Carbendazim&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-02-08&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000020&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_01901130&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>105&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SP_0210&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2016-02-01&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2016&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSP_0210997&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>106&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>106&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STEP_0002&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Chlortoluron&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-04-15&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000400&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTEP_00021048&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  7&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>107&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STEP_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Chlortoluron&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-04-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTEP_002050&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  7&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>108&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STEP_0050&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Chlortoluron&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-04-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>4&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTEP_005050&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  7&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>109&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STEP_0080&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-08&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTEP_00802&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 75&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>110&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTGR_0010601&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 54&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>111&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>STRO_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-06-03&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>6&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSTRO_0010895&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>112&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SYFL_0015&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-03-02&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000900&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSYFL_0015770&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  8&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>113&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>SYFL_0020&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-01-30&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgSYFL_0020779&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 67&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>114&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>VESTK_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-01-17&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000500&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgVESTK_0010848&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  9&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>115&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>WEFL_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Alachlor&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2020-03-24&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2020&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>3&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgWEFL_0010917&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>116&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>WENGR_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2017-02-06&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2017&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgWENGR_0010805&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 81&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>117&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>WE_0050&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aclonifen&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-07&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000025&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000005&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgWE_0050365&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 24&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>118&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>WOD_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Bentazon&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2015-02-09&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000050&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000010&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2015&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgWOD_0010813&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 78&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>119&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>ZEKA_0040&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Carbendazim&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2022-02-21&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000100&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000020&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2022&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgZEKA_0040879&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td>  5&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>120&emsp;<\/td><\/tr><tr><td>1<\/td><th>site_id&emsp;<\/th><td>ZSEE_0010&emsp;<\/td><\/tr><tr><td>2<\/td><th>compound&emsp;<\/th><td>Aminomethylphosphonsäure(AMPA)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2021-01-14&emsp;<\/td><\/tr><tr><td>4<\/td><th>concentration&emsp;<\/th><td>0.0000250&emsp;<\/td><\/tr><tr><td>5<\/td><th>LOQ&emsp;<\/th><td>0.000050&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>mg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>brandenburg&emsp;<\/td><\/tr><tr><td>8<\/td><th>year&emsp;<\/th><td>2021&emsp;<\/td><\/tr><tr><td>9<\/td><th>month&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>10<\/td><th>sample_id&emsp;<\/th><td>brandenburgZSEE_0010284&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>n.sample&emsp;<\/th><td> 20&emsp;<\/td><\/tr><tr><td>14<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["1","80","57","5","20","90","8","24","43","82","58","9","47","82","32","43","21","96","97","6","91","17","92","12","22","5","65","8","10","82","1","19","67","93","73","35","5","38","15","15","66","47","5","82","91","5","4","48","2","9","5","4","12","92","70","77","36","22","5","9","56","94","55","41","106","82","37","10","93","83","38","1","60","2","57","42","47","6","67","5","2","88","5","6","5","9","10","5","2","56","85","21","84","77","1","10","44","40","88","5","11","11","21","5","106","7","7","7","75","54","5","8","67","9","5","81","24","78","5","20"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[11.6358471503774,51.4483447079805,14.7975582988456,53.3144546376835,true,"sites.sf - n.sample","Zoom to sites.sf - n.sample","<strong> sites.sf - n.sample <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"sites.sf - n.sample",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#4B0055 , #30437F 18.0952380952381%, #007B97 37.1428571428571%, #00A98F 56.1904761904762%, #56CD66 75.2380952380952%, #DDE22C 94.2857142857143%, #FDE333 "],"labels":["20","40","60","80","100"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"sites.sf - n.sample","extra":{"p_1":0.180952380952381,"p_n":0.942857142857143},"layerId":null,"className":"info legend","group":"sites.sf - n.sample"}]}],"limits":{"lat":[51.4483447079805,53.3144546376835],"lng":[11.6358471503774,14.7975582988456]},"fitBounds":[51.4483447079805,11.6358471503774,53.3144546376835,14.7975582988456,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+</div>
+</div>
+<section id="run-information" class="level1">
+<h1>Run information</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 22000)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] shiny_1.7.3       conflicted_1.1.0  knitr_1.40        ggplot2_3.4.0    
+ [5] mapview_2.11.0    sf_1.0-9          rstudioapi_0.14   lubridate_1.9.0  
+ [9] timechange_0.1.1  magrittr_2.0.3    dplyr_1.0.10      data.table_1.14.6
+[13] readxl_1.4.1     
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.4              sass_0.4.2              viridisLite_0.4.1      
+ [4] jsonlite_1.8.3          bslib_0.4.1             assertthat_0.2.1       
+ [7] highr_0.9               sp_1.5-1                stats4_4.2.2           
+[10] cellranger_1.1.0        yaml_2.3.6              pillar_1.8.1           
+[13] lattice_0.20-45         glue_1.6.2              uuid_1.1-0             
+[16] digest_0.6.30           promises_1.2.0.1        rvest_1.0.3            
+[19] leaflet.providers_1.9.0 colorspace_2.0-3        htmltools_0.5.3        
+[22] httpuv_1.6.6            pkgconfig_2.0.3         raster_3.6-3           
+[25] xtable_1.8-4            scales_1.2.1            webshot_0.5.4          
+[28] brew_1.0-8              svglite_2.1.0           terra_1.6-17           
+[31] satellite_1.0.4         later_1.3.0             tibble_3.1.8           
+[34] proxy_0.4-27            generics_0.1.3          farver_2.1.1           
+[37] ellipsis_0.3.2          cachem_1.0.6            withr_2.5.0            
+[40] cli_3.4.1               mime_0.12               memoise_2.0.1          
+[43] evaluate_0.18           fansi_1.0.3             xml2_1.3.3             
+[46] class_7.3-20            tools_4.2.2             lifecycle_1.0.3        
+[49] stringr_1.4.1           munsell_0.5.0           kableExtra_1.3.4       
+[52] compiler_4.2.2          jquerylib_0.1.4         e1071_1.7-12           
+[55] systemfonts_1.0.4       rlang_1.0.6             leafpop_0.1.0          
+[58] classInt_0.4-8          units_0.8-0             grid_4.2.2             
+[61] htmlwidgets_1.5.4       crosstalk_1.2.0         leafem_0.2.0           
+[64] base64enc_0.1-3         labeling_0.4.2          rmarkdown_2.18         
+[67] gtable_0.3.1            codetools_0.2-18        DBI_1.1.3              
+[70] R6_2.5.1                fastmap_1.1.0           utf8_1.2.2             
+[73] KernSmooth_2.23-20      stringi_1.7.8           Rcpp_1.0.9             
+[76] vctrs_0.5.1             png_0.1-7               leaflet_2.1.1          
+[79] tidyselect_1.2.0        xfun_0.35              </code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
