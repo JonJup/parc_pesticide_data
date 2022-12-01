@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jonathan Jupke">
+
+<title>explore saarland pesticide data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="explore_saarland_files/libs/clipboard/clipboard.min.js"></script>
+<script src="explore_saarland_files/libs/quarto-html/quarto.js"></script>
+<script src="explore_saarland_files/libs/quarto-html/popper.min.js"></script>
+<script src="explore_saarland_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="explore_saarland_files/libs/quarto-html/anchor.min.js"></script>
+<link href="explore_saarland_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="explore_saarland_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="explore_saarland_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="explore_saarland_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="explore_saarland_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="explore_saarland_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="explore_saarland_files/libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="explore_saarland_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="explore_saarland_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="explore_saarland_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="explore_saarland_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="explore_saarland_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="explore_saarland_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="explore_saarland_files/libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="explore_saarland_files/libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="explore_saarland_files/libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<link href="explore_saarland_files/libs/HomeButton-0.0.1/home-button.css" rel="stylesheet">
+<script src="explore_saarland_files/libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="explore_saarland_files/libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="explore_saarland_files/libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="explore_saarland_files/libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet">
+<link href="explore_saarland_files/libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">explore saarland pesticide data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jonathan Jupke </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<p>How many samples?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 110</code></pre>
+</div>
+</div>
+<p>How many sites?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>How many samples per site?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_saarland_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>When does sampling occur?</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="explore_saarland_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How many compounds per sample?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_saarland_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How many different compounds?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+</div>
+<p>How often does each compound occur?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explore_saarland_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         compound n.occur
+ 1:  Chlortoluron      43
+ 2:    Flufenacet      34
+ 3:   Isoproturon      31
+ 4:   Metolachlor      25
+ 5:  Prosulfocarb      22
+ 6:   Metazachlor      18
+ 7:  Dimethenamid      13
+ 8:  Diflufenican       9
+ 9: Terbuthylazin       5
+10:  Fluxapyroxad       3
+11:  Dimethachlor       3
+12: Pendimethalin       3
+13:  Metobromuron       3
+14:        Diuron       2
+15:    Flurtamone       1
+16:   Tebuconazol       1</code></pre>
+</div>
+</div>
+<p>Map of samples</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="htmlwidget-333b2fb444c4a4299557" style="width:100%;height:464px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-333b2fb444c4a4299557">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[[49.1358054113125,49.3422751872936,49.4093637687973,49.1970209589742],[7.18305968921217,6.59273468916042,6.64743592386838,7.0284159525329],6,null,"sites.sf - n.sample",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":[0.9,0.9,0.9,0.9],"fill":true,"fillColor":["#4B0055","#FDE333","#00BE7D","#4B0055"],"fillOpacity":[0.6,0.6,0.6,0.6]},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>sample_id&emsp;<\/th><td>O-2013-00913&emsp;<\/td><\/tr><tr><td>2<\/td><th>site_id&emsp;<\/th><td>Blies: Reinheim, Straßenbrücke, Keltenstraße&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2013-10-28&emsp;<\/td><\/tr><tr><td>4<\/td><th>compound&emsp;<\/th><td>Isoproturon&emsp;<\/td><\/tr><tr><td>5<\/td><th>concentration&emsp;<\/th><td>0.058&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>µg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>Saarland&emsp;<\/td><\/tr><tr><td>8<\/td><th>epsg&emsp;<\/th><td>31466&emsp;<\/td><\/tr><tr><td>9<\/td><th>year&emsp;<\/th><td>2013&emsp;<\/td><\/tr><tr><td>10<\/td><th>month&emsp;<\/th><td>10&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>LOQ&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>14<\/td><th>comment&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>15<\/td><th>n.sample&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>16<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2&emsp;<\/td><\/tr><tr><td>1<\/td><th>sample_id&emsp;<\/th><td>O-2013-00388&emsp;<\/td><\/tr><tr><td>2<\/td><th>site_id&emsp;<\/th><td>Nied: Niedaltdorf, Pegel&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2013-05-13&emsp;<\/td><\/tr><tr><td>4<\/td><th>compound&emsp;<\/th><td>Isoproturon&emsp;<\/td><\/tr><tr><td>5<\/td><th>concentration&emsp;<\/th><td>0.065&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>µg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>Saarland&emsp;<\/td><\/tr><tr><td>8<\/td><th>epsg&emsp;<\/th><td>31466&emsp;<\/td><\/tr><tr><td>9<\/td><th>year&emsp;<\/th><td>2013&emsp;<\/td><\/tr><tr><td>10<\/td><th>month&emsp;<\/th><td> 5&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>LOQ&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>14<\/td><th>comment&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>15<\/td><th>n.sample&emsp;<\/th><td>51&emsp;<\/td><\/tr><tr><td>16<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3&emsp;<\/td><\/tr><tr><td>1<\/td><th>sample_id&emsp;<\/th><td>O-2013-00389&emsp;<\/td><\/tr><tr><td>2<\/td><th>site_id&emsp;<\/th><td>Saar: Fremersdorf, Brücke re (Saar 5)&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2013-05-13&emsp;<\/td><\/tr><tr><td>4<\/td><th>compound&emsp;<\/th><td>Isoproturon&emsp;<\/td><\/tr><tr><td>5<\/td><th>concentration&emsp;<\/th><td>0.091&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>µg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>Saarland&emsp;<\/td><\/tr><tr><td>8<\/td><th>epsg&emsp;<\/th><td>31466&emsp;<\/td><\/tr><tr><td>9<\/td><th>year&emsp;<\/th><td>2013&emsp;<\/td><\/tr><tr><td>10<\/td><th>month&emsp;<\/th><td> 5&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>LOQ&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>14<\/td><th>comment&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>15<\/td><th>n.sample&emsp;<\/th><td>31&emsp;<\/td><\/tr><tr><td>16<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4&emsp;<\/td><\/tr><tr><td>1<\/td><th>sample_id&emsp;<\/th><td>O-2014-00849&emsp;<\/td><\/tr><tr><td>2<\/td><th>site_id&emsp;<\/th><td>Saar: Güdingen [Saar 2]&emsp;<\/td><\/tr><tr><td>3<\/td><th>date&emsp;<\/th><td>2014-10-27&emsp;<\/td><\/tr><tr><td>4<\/td><th>compound&emsp;<\/th><td>Isoproturon&emsp;<\/td><\/tr><tr><td>5<\/td><th>concentration&emsp;<\/th><td>0.052&emsp;<\/td><\/tr><tr><td>6<\/td><th>measurement_unit&emsp;<\/th><td>µg/l&emsp;<\/td><\/tr><tr><td>7<\/td><th>data.set&emsp;<\/th><td>Saarland&emsp;<\/td><\/tr><tr><td>8<\/td><th>epsg&emsp;<\/th><td>31466&emsp;<\/td><\/tr><tr><td>9<\/td><th>year&emsp;<\/th><td>2014&emsp;<\/td><\/tr><tr><td>10<\/td><th>month&emsp;<\/th><td>10&emsp;<\/td><\/tr><tr><td>11<\/td><th>sample_medium&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>12<\/td><th>separating_process&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>13<\/td><th>LOQ&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>14<\/td><th>comment&emsp;<\/th><td>NA&emsp;<\/td><\/tr><tr><td>15<\/td><th>n.sample&emsp;<\/th><td>17&emsp;<\/td><\/tr><tr><td>16<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["11","51","31","17"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[6.59273468916042,49.1358054113125,7.18305968921217,49.4093637687973,true,"sites.sf - n.sample","Zoom to sites.sf - n.sample","<strong> sites.sf - n.sample <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"sites.sf - n.sample",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#4B0055 , #492D67 10%, #3A527F 22.5%, #077493 35%, #1C908C 47.5%, #16AE83 60%, #5FC573 72.5%, #B1D45C 85%, #F1E13C 97.5%, #FDE333 "],"labels":["15","20","25","30","35","40","45","50"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"sites.sf - n.sample","extra":{"p_1":0.1,"p_n":0.975},"layerId":null,"className":"info legend","group":"sites.sf - n.sample"}]}],"limits":{"lat":[49.1358054113125,49.4093637687973],"lng":[6.59273468916042,7.18305968921217]},"fitBounds":[49.1358054113125,6.59273468916042,49.4093637687973,7.18305968921217,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+</div>
+</div>
+<section id="run-information" class="level1">
+<h1>Run information</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 22000)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] stringr_1.4.1     tidyr_1.2.1       fs_1.5.2          shiny_1.7.3      
+ [5] conflicted_1.1.0  knitr_1.41        ggplot2_3.4.0     mapview_2.11.0   
+ [9] sf_1.0-9          rstudioapi_0.14   lubridate_1.9.0   timechange_0.1.1 
+[13] magrittr_2.0.3    dplyr_1.0.10      data.table_1.14.6 readxl_1.4.1     
+
+loaded via a namespace (and not attached):
+ [1] jsonlite_1.8.3          assertthat_0.2.1        sp_1.5-1               
+ [4] stats4_4.2.2            cellranger_1.1.0        yaml_2.3.6             
+ [7] pillar_1.8.1            lattice_0.20-45         glue_1.6.2             
+[10] uuid_1.1-0              digest_0.6.30           promises_1.2.0.1       
+[13] leaflet.providers_1.9.0 colorspace_2.0-3        htmltools_0.5.3        
+[16] httpuv_1.6.6            pkgconfig_2.0.3         raster_3.6-3           
+[19] purrr_0.3.5             xtable_1.8-4            scales_1.2.1           
+[22] webshot_0.5.4           svglite_2.1.0           brew_1.0-8             
+[25] terra_1.6-41            satellite_1.0.4         later_1.3.0            
+[28] tibble_3.1.8            proxy_0.4-27            generics_0.1.3         
+[31] farver_2.1.1            ellipsis_0.3.2          cachem_1.0.6           
+[34] withr_2.5.0             cli_3.4.1               mime_0.12              
+[37] memoise_2.0.1           evaluate_0.18           fansi_1.0.3            
+[40] class_7.3-20            tools_4.2.2             lifecycle_1.0.3        
+[43] munsell_0.5.0           compiler_4.2.2          e1071_1.7-12           
+[46] systemfonts_1.0.4       rlang_1.0.6             classInt_0.4-8         
+[49] units_0.8-0             grid_4.2.2              leafpop_0.1.0          
+[52] htmlwidgets_1.5.4       crosstalk_1.2.0         leafem_0.2.0           
+[55] base64enc_0.1-3         labeling_0.4.2          rmarkdown_2.18         
+[58] gtable_0.3.1            codetools_0.2-18        DBI_1.1.3              
+[61] R6_2.5.1                fastmap_1.1.0           utf8_1.2.2             
+[64] KernSmooth_2.23-20      stringi_1.7.8           Rcpp_1.0.9             
+[67] vctrs_0.5.1             png_0.1-7               leaflet_2.1.1          
+[70] tidyselect_1.2.0        xfun_0.35              </code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

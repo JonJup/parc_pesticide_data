@@ -1,0 +1,85 @@
+---
+title: "explore Schleswig Holstein pesticide data"
+author: "Jonathan Jupke"
+format: html
+execute: 
+  echo: FALSE
+  message: false
+editor: visual
+---
+
+```{r setup, message = FALSE}
+source("../../../R/packages.R")
+```
+
+```{r}
+data = readRDS("../../../data/schleswig-holstein/pesticide_data_sh_clean.rds")
+```
+
+How many samples?
+
+```{r}
+uniqueN(data$sample_id)
+```
+
+How many sites?
+
+```{r}
+uniqueN(data$site_id)
+```
+
+How many samples per site?
+
+```{r}
+data[, n.sample := uniqueN(sample_id), by = "site_id"]
+sites <- unique(data, by = "site_id")
+sites |> ggplot(aes(n.sample)) + geom_histogram(binwidth = 2)
+```
+
+When does sampling occur?
+
+```{r}
+samples <- unique(data, by = "sample_id")
+samples |> ggplot(aes(date)) + geom_histogram()
+```
+
+How many compounds per sample?
+
+```{r}
+data[, n.compound := uniqueN(compound), by = "sample_id"]
+samples <- unique(data, by = "sample_id")
+samples |> ggplot(aes(n.compound)) + geom_histogram(binwidth = 2)
+```
+
+How many different compounds?
+
+```{r}
+uniqueN(data$compound)
+```
+
+How often does each compound occur?
+
+```{r}
+data[, n.occur := uniqueN(sample_id), by = "compound"]
+unique(data, by = "compound") |> arrange(desc(n.occur)) |> slice_head(n = 20) |> ggplot(aes(n.occur, reorder(compound, n.occur, sum))) + geom_col()
+```
+
+```{r}
+unique(data, by = "compound") |> 
+        arrange(desc(n.occur)) |> 
+        select(compound, n.occur) |> 
+        print()
+```
+
+Map of samples
+
+```{r}
+sites.sf <- st_as_sf(sites, coords = c("x.coord", "y.coord"), crs = sites$epsg[1])
+mapview(sites.sf, zcol = "n.sample")
+```
+
+# Run information
+
+```{r}
+sessionInfo()
+```
