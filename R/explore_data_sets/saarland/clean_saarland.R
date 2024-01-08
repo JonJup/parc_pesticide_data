@@ -32,12 +32,30 @@ data[-c(1:3),] |>
                date    = ...5) |> 
         pivot_longer(cols = !c(sample_id:date), names_to = "compound", values_to = "concentration") |> 
         dplyr::filter(!is.na(concentration)) |> 
-        dplyr::filter(!str_detect(concentration, "<")) |> 
-        mutate(concentration = as.numeric(concentration),
+        #dplyr::filter(!str_detect(concentration, "<")) |> 
+        mutate(#concentration = as.numeric(concentration),
                date          = as_date(dmy(date)),
                measurement_unit = "µg/l", 
                data.set = "Saarland") -> 
         data
+
+# - Assuming the < entries are the LOQs
+setDT(data)
+data[str_detect(concentration, "<"), LOQ := readr::parse_number(concentration)]
+us <- data[is.na(LOQ), unique(compound)]
+# - creat a vector of unique substances
+for (i in us){
+        
+        i.loq <- data[compound == i & str_detect(concentration, "<")]
+        if(nrow(i.loq) == 0) print(i)
+        i.min <- i.loq$concentration%>%readr::parse_number()%>%unique%>%min
+        data[compound == i & str_detect(concentration, "<", negate = T), LOQ := i.min]
+        
+        rm(list = ls()[grepl(pattern = "^i\\.", x = ls())])
+        rm(i)
+}
+
+
 data %<>% mutate(epsg = 31466)
 # data |> 
 #         st_as_sf(coords = c("x.coord", "y.coord"), crs = data$epsg[1]) -> 

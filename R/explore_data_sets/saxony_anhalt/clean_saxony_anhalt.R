@@ -40,8 +40,28 @@ data2 <- data2[, names(data2)[which(colSums(is.na(data2)) == nrow(data2))] := NU
 data2 %<>% pivot_longer(cols = !c("sample_id", "site_id", "date", "year", "Bemerkung"), names_to = "compound", values_to = "concentration", values_transform = as.character)
 data2 %<>% 
         dplyr::filter(!is.na(concentration)) %>% 
-        dplyr::filter(! concentration %in% c("n.b.", "n.a.", "FALSE", "TRUE")) %>%
-        dplyr::filter(!str_detect(concentration, "<")) 
+        dplyr::filter(! concentration %in% c("n.b.", "n.a.", "FALSE", "TRUE")) 
+        #dplyr::filter(!str_detect(concentration, "<")) 
+setDT(data2)
+data2[, compound := str_remove(compound, "\\.\\.\\..*")]
+data2[, compound := str_to_title(compound)]
+data2[, concentration := str_replace(concentration, pattern = ",", replacement = "\\.")]
+
+# - Assuming the < entries are the LOQs
+setDT(data2)
+data2[str_detect(concentration, "<"), LOQ := readr::parse_number(concentration)]
+us <- data2[is.na(LOQ), unique(compound)]
+# - creat a vector of unique substances
+for (i in us){
+        
+        i.loq <- data2[compound == i & str_detect(concentration, "<")]
+        if(nrow(i.loq) == 0) print(i)
+        i.min <- i.loq$concentration%>%readr::parse_number()%>%unique%>%min
+        data2[compound == i & str_detect(concentration, "<", negate = T), LOQ := i.min]
+        
+        rm(list = ls()[grepl(pattern = "^i\\.", x = ls())])
+        rm(i)
+}
 
 # . check comments 
 data2%<>%rename(comment = Bemerkung)
@@ -66,7 +86,7 @@ setDT(data3)
 data3[, data.set := "saxony_anhalt"]
 
 #data[, concentration := str_replace(concentration, ",", "\\.")]
-data3[, concentration := as.numeric(concentration)]
+#data3[, concentration := as.numeric(concentration)]
 # sites <- unique(data, by = "site_id") |> st_as_sf(coords = c("x.coord", "y.coord"), crs = 5652)
 # mapview(sites)
 data <- data3
@@ -74,10 +94,6 @@ data <- data3
 source("R/harmonize_variables.R")
 sort(variables)
 data <- data[!is.na(x.coord) & !is.na(y.coord)]
-data[compound == "DICOFOL...22",   compound := "DICOFOL"]
-data[compound == "BIFENOX...15",   compound := "BIFENOX"]
-data[compound == "QUINOXFEN...96", compound := "QUINOXFEN"]
-
 
 # save data -------------------------------------------
 saveRDS(data, "data/saxony_anhalt/pesticide_data_saxony_anhalt_clean.rds")

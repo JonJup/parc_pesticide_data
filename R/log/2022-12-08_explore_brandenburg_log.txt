@@ -1,0 +1,44 @@
+[1] "~/Uni/projects/PARC/parc_pesticide_data/R/explore_data_sets/brandenburg/clean_brandenburg.R"
+R version 4.2.2 (2022-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 22000)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] tidyr_1.2.1       stringr_1.4.1     shiny_1.7.3       sf_1.0-9         
+ [5] rstudioapi_0.14   readxl_1.4.1      plotly_4.10.1     mapview_2.11.0   
+ [9] magrittr_2.0.3    lubridate_1.9.0   timechange_0.1.1  knitr_1.41       
+[13] janitor_2.1.0     Hmisc_4.7-2       Formula_1.2-4     survival_3.4-0   
+[17] lattice_0.20-45   ggplot2_3.4.0     fs_1.5.2          dplyr_1.0.10     
+[21] data.table_1.14.6 conflicted_1.1.0 
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.4          viridisLite_0.4.1   jsonlite_1.8.3      splines_4.2.2      
+ [5] assertthat_0.2.1    sp_1.5-1            stats4_4.2.2        latticeExtra_0.6-30
+ [9] cellranger_1.1.0    pillar_1.8.1        backports_1.4.1     glue_1.6.2         
+[13] digest_0.6.30       promises_1.2.0.1    RColorBrewer_1.1-3  checkmate_2.1.0    
+[17] snakecase_0.11.0    colorspace_2.0-3    httpuv_1.6.6        htmltools_0.5.3    
+[21] Matrix_1.5-3        pkgconfig_2.0.3     raster_3.6-11       xtable_1.8-4       
+[25] purrr_0.3.5         scales_1.2.1        webshot_0.5.4       later_1.3.0        
+[29] terra_1.6-41        jpeg_0.1-10         satellite_1.0.4     htmlTable_2.4.1    
+[33] tibble_3.1.8        proxy_0.4-27        generics_0.1.3      ellipsis_0.3.2     
+[37] cachem_1.0.6        withr_2.5.0         lazyeval_0.2.2      nnet_7.3-18        
+[41] cli_3.4.1           mime_0.12           deldir_1.0-6        memoise_2.0.1      
+[45] fansi_1.0.3         foreign_0.8-83      class_7.3-20        tools_4.2.2        
+[49] lifecycle_1.0.3     interp_1.1-3        munsell_0.5.0       cluster_2.1.4      
+[53] compiler_4.2.2      e1071_1.7-12        rlang_1.0.6         classInt_0.4-8     
+[57] units_0.8-0         grid_4.2.2          htmlwidgets_1.5.4   crosstalk_1.2.0    
+[61] leafem_0.2.0        base64enc_0.1-3     gtable_0.3.1        codetools_0.2-18   
+[65] DBI_1.1.3           R6_2.5.1            gridExtra_2.3       fastmap_1.1.0      
+[69] utf8_1.2.2          KernSmooth_2.23-20  stringi_1.7.8       Rcpp_1.0.9         
+[73] vctrs_0.5.1         rpart_4.1.19        png_0.1-8           leaflet_2.1.1      
+[77] tidyselect_1.2.0    xfun_0.35          

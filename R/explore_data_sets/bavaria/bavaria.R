@@ -41,7 +41,7 @@ for (i in 1:length(files)){
         i.data2[, compound := str_remove(compound, "\\ \\(\\ m\\ Tiefe\\)")]
         i.data2[, measurement_unit := str_extract(compound, "\\ \\[.*\\]$")]
         i.data2[, compound := str_remove(compound, "\\ \\[.*\\]$")]
-        i.data2[concentration == "", concentration := "< LOD"]
+        i.data2 <- i.data2[concentration != "",]
         i.data2[concentration == "< BG", concentration := "< LOQ"]
         data.sets[[i]] <- i.data2
         rm(list = ls()[grepl(pattern = "^i\\.", x = ls())])
@@ -55,19 +55,24 @@ if (file.exists("data/variables.rds")){
 } else {
         variables <- c()
 }
-
 # prepare data ----------------------------------------
 
-data <- data[!concentration %in% c("< LOD", "< LOQ")]
+# - Drop measurements below LOQ. 
+# - As discussed in the meeting on the 02.12.2022, we will keep such 
+# - measurements for now. 
+#data <- data[!concentration %in% c("< LOD", "< LOQ")]
 
 unique(data$compound)
 
 data[, data.set := "bavaria"]
 data[, epsg := 25832]
 data[, concentration := str_replace(concentration, ",", "\\.")]
-data[, concentration := as.numeric(concentration)]
+# - concentrations must remain string because of "< LOQ" values
+#data[, concentration := as.numeric(concentration)]
 data[, date := ymd(date)]
+# - harmonize variables across data sets
 source("R/harmonize_variables.R")
+# - drop sites without coordinates
 data <- data[!is.na(x.coord) & !is.na(y.coord)]
 # save data -------------------------------------------
 saveRDS(data, "data/bavaria/pesticide_data_bavaria_clean.rds")

@@ -1,0 +1,312 @@
+                                                Messstellenname Gewässer Messstellen-Nr      Datum     Zeit Wert
+     1:                                                Pretzsch     Elbe        2110010 04.01.2017 08:00:00    3
+     2:                                                Pretzsch     Elbe        2110010 06.03.2017 08:25:00    5
+     3:                                                Pretzsch     Elbe        2110010 10.04.2017 08:25:00    9
+     4:                                                Pretzsch     Elbe        2110010 02.05.2017 08:50:00    9
+     5:                                                Pretzsch     Elbe        2110010 07.06.2017 08:15:00   14
+    ---                                                                                                         
+279296: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 04.03.2019 09:45:00  7,7
+279297: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 14.05.2019 09:20:00    8
+279298: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 01.07.2019 11:50:00  8,1
+279299: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 10.09.2019 11:45:00  7,9
+279300: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 12.11.2019 12:25:00  7,7
+            Einheit      Parameter
+     1:          °C Lufttemperatur
+     2:          °C Lufttemperatur
+     3:          °C Lufttemperatur
+     4:          °C Lufttemperatur
+     5:          °C Lufttemperatur
+    ---                           
+279296: Relativwert        pH-Wert
+279297: Relativwert        pH-Wert
+279298: Relativwert        pH-Wert
+279299: Relativwert        pH-Wert
+279300: Relativwert        pH-Wert
+                                                Messstellenname Gewässer Messstellen-Nr      Datum     Zeit Wert
+     1:                                                Pretzsch     Elbe        2110010 04.01.2017 08:00:00    3
+     2:                                                Pretzsch     Elbe        2110010 06.03.2017 08:25:00    5
+     3:                                                Pretzsch     Elbe        2110010 10.04.2017 08:25:00    9
+     4:                                                Pretzsch     Elbe        2110010 02.05.2017 08:50:00    9
+     5:                                                Pretzsch     Elbe        2110010 07.06.2017 08:15:00   14
+    ---                                                                                                         
+279296: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 04.03.2019 09:45:00  7,7
+279297: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 14.05.2019 09:20:00    8
+279298: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 01.07.2019 11:50:00  8,1
+279299: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 10.09.2019 11:45:00  7,9
+279300: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 12.11.2019 12:25:00  7,7
+            Einheit      Parameter
+     1:          °C Lufttemperatur
+     2:          °C Lufttemperatur
+     3:          °C Lufttemperatur
+     4:          °C Lufttemperatur
+     5:          °C Lufttemperatur
+    ---                           
+279296: Relativwert        pH-Wert
+279297: Relativwert        pH-Wert
+279298: Relativwert        pH-Wert
+279299: Relativwert        pH-Wert
+279300: Relativwert        pH-Wert
+                                                Messstellenname Gewässer Messstellen-Nr      Datum     Zeit Wert
+     1:                                                Pretzsch     Elbe        2110010 04.01.2017 08:00:00    3
+     2:                                                Pretzsch     Elbe        2110010 06.03.2017 08:25:00    5
+     3:                                                Pretzsch     Elbe        2110010 10.04.2017 08:25:00    9
+     4:                                                Pretzsch     Elbe        2110010 02.05.2017 08:50:00    9
+     5:                                                Pretzsch     Elbe        2110010 07.06.2017 08:15:00   14
+    ---                                                                                                         
+279296: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 04.03.2019 09:45:00  7,7
+279297: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 14.05.2019 09:20:00    8
+279298: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 01.07.2019 11:50:00  8,1
+279299: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 10.09.2019 11:45:00  7,9
+279300: am Grenzweg nördlich Darsekau, oh. Mdg. Bülitz-Beesemer    Dumme         419395 12.11.2019 12:25:00  7,7
+            Einheit      Parameter
+     1:          °C Lufttemperatur
+     2:          °C Lufttemperatur
+     3:          °C Lufttemperatur
+     4:          °C Lufttemperatur
+     5:          °C Lufttemperatur
+    ---                           
+279296: Relativwert        pH-Wert
+279297: Relativwert        pH-Wert
+279298: Relativwert        pH-Wert
+279299: Relativwert        pH-Wert
+279300: Relativwert        pH-Wert
+           Gewaesser              Messstelle Mst_Nr_Bio Mst_Nr_Ch         Probe_Nr
+     1:         Bode               Susenburg     410103    410103           2/2004
+     2:         Bode               Susenburg     410103    410103           2/2004
+     3:         Bode               Susenburg     410103    410103           2/2004
+     4:         Bode               Susenburg     410103    410103           2/2004
+     5:         Bode               Susenburg     410103    410103           2/2004
+    ---                                                                           
+179806: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179807: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179808: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179809: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179810: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+        Teilpr_Nr      Datum        System    DV                   Taxon HK IZ
+     1:        NA 18.06.2003     Hirudinea  1017 Glossiphonia complanata  3 20
+     2:        NA 18.06.2003     Hirudinea  1000   Erpobdella octoculata  2 10
+     3:        NA 18.06.2003 Ephemeroptera   348          Baetis muticus  2 10
+     4:        NA 18.06.2003 Ephemeroptera   107          Baetis rhodani  4 65
+     5:        NA 18.06.2003 Ephemeroptera     7                  Baetis  4 65
+    ---                                                                       
+179806:        NA 20.10.1992    Gastropoda  1009    Bithynia tentaculata  2  5
+179807:        NA 20.10.1992    Coleoptera   441        Hyphydrus ovatus  3 20
+179808:        NA 20.10.1992   Heteroptera 10150               Corixidae  3 20
+179809:        NA 20.10.1992    Gastropoda  1409          Radix balthica  3 20
+179810:        NA 20.10.1992       Odonata   382              Anisoptera  2  5
+              date        sample_id site_id                   taxon ind_qm abclass
+     1: 2003-06-18           2/2004  410103 Glossiphonia complanata     20       3
+     2: 2003-06-18           2/2004  410103   Erpobdella octoculata     10       2
+     3: 2003-06-18           2/2004  410103          Baetis muticus     10       2
+     4: 2003-06-18           2/2004  410103          Baetis rhodani     65       4
+     5: 2003-06-18           2/2004  410103                  Baetis     65       4
+    ---                                                                           
+179806: 1992-10-20 GLD / 1992 / 001 N-00007    Bithynia tentaculata      5       2
+179807: 1992-10-20 GLD / 1992 / 001 N-00007        Hyphydrus ovatus     20       3
+179808: 1992-10-20 GLD / 1992 / 001 N-00007               Corixidae     20       3
+179809: 1992-10-20 GLD / 1992 / 001 N-00007          Radix balthica     20       3
+179810: 1992-10-20 GLD / 1992 / 001 N-00007              Anisoptera      5       2
+        source aqem_id taxon_aqem ind_from_class class_from_ind annot comment_clean
+     1:    GLD      NA         NA             NA             NA    NA            NA
+     2:    GLD      NA         NA             NA             NA    NA            NA
+     3:    GLD      NA         NA             NA             NA    NA            NA
+     4:    GLD      NA         NA             NA             NA    NA            NA
+     5:    GLD      NA         NA             NA             NA    NA            NA
+    ---                                                                            
+179806:    GLD      NA         NA             NA             NA    NA            NA
+179807:    GLD      NA         NA             NA             NA    NA            NA
+179808:    GLD      NA         NA             NA             NA    NA            NA
+179809:    GLD      NA         NA             NA             NA    NA            NA
+179810:    GLD      NA         NA             NA             NA    NA            NA
+        comment_other                  taxon2
+     1:            NA Glossiphonia complanata
+     2:            NA   Erpobdella octoculata
+     3:            NA          Baetis muticus
+     4:            NA          Baetis rhodani
+     5:            NA                  Baetis
+    ---                                      
+179806:            NA    Bithynia tentaculata
+179807:            NA        Hyphydrus ovatus
+179808:            NA               Corixidae
+179809:            NA          Radix balthica
+179810:            NA              Anisoptera
+           Gewaesser              Messstelle Mst_Nr_Bio Mst_Nr_Ch         Probe_Nr
+     1:         Bode               Susenburg     410103    410103           2/2004
+     2:         Bode               Susenburg     410103    410103           2/2004
+     3:         Bode               Susenburg     410103    410103           2/2004
+     4:         Bode               Susenburg     410103    410103           2/2004
+     5:         Bode               Susenburg     410103    410103           2/2004
+    ---                                                                           
+179806: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179807: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179808: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179809: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179810: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+        Teilpr_Nr      Datum        System    DV                   Taxon HK IZ
+     1:        NA 18.06.2003     Hirudinea  1017 Glossiphonia complanata  3 20
+     2:        NA 18.06.2003     Hirudinea  1000   Erpobdella octoculata  2 10
+     3:        NA 18.06.2003 Ephemeroptera   348          Baetis muticus  2 10
+     4:        NA 18.06.2003 Ephemeroptera   107          Baetis rhodani  4 65
+     5:        NA 18.06.2003 Ephemeroptera     7                  Baetis  4 65
+    ---                                                                       
+179806:        NA 20.10.1992    Gastropoda  1009    Bithynia tentaculata  2  5
+179807:        NA 20.10.1992    Coleoptera   441        Hyphydrus ovatus  3 20
+179808:        NA 20.10.1992   Heteroptera 10150               Corixidae  3 20
+179809:        NA 20.10.1992    Gastropoda  1409          Radix balthica  3 20
+179810:        NA 20.10.1992       Odonata   382              Anisoptera  2  5
+              date        sample_id site_id                   taxon ind_qm abclass
+     1: 2003-06-18           2/2004  410103 Glossiphonia complanata     20       3
+     2: 2003-06-18           2/2004  410103   Erpobdella octoculata     10       2
+     3: 2003-06-18           2/2004  410103          Baetis muticus     10       2
+     4: 2003-06-18           2/2004  410103          Baetis rhodani     65       4
+     5: 2003-06-18           2/2004  410103                  Baetis     65       4
+    ---                                                                           
+179806: 1992-10-20 GLD / 1992 / 001 N-00007    Bithynia tentaculata      5       2
+179807: 1992-10-20 GLD / 1992 / 001 N-00007        Hyphydrus ovatus     20       3
+179808: 1992-10-20 GLD / 1992 / 001 N-00007               Corixidae     20       3
+179809: 1992-10-20 GLD / 1992 / 001 N-00007          Radix balthica     20       3
+179810: 1992-10-20 GLD / 1992 / 001 N-00007              Anisoptera      5       2
+        source aqem_id taxon_aqem ind_from_class class_from_ind annot comment_clean
+     1:    GLD      NA         NA             NA             NA    NA            NA
+     2:    GLD      NA         NA             NA             NA    NA            NA
+     3:    GLD      NA         NA             NA             NA    NA            NA
+     4:    GLD      NA         NA             NA             NA    NA            NA
+     5:    GLD      NA         NA             NA             NA    NA            NA
+    ---                                                                            
+179806:    GLD      NA         NA             NA             NA    NA            NA
+179807:    GLD      NA         NA             NA             NA    NA            NA
+179808:    GLD      NA         NA             NA             NA    NA            NA
+179809:    GLD      NA         NA             NA             NA    NA            NA
+179810:    GLD      NA         NA             NA             NA    NA            NA
+        comment_other                  taxon2
+     1:            NA Glossiphonia complanata
+     2:            NA   Erpobdella octoculata
+     3:            NA          Baetis muticus
+     4:            NA          Baetis rhodani
+     5:            NA                  Baetis
+    ---                                      
+179806:            NA    Bithynia tentaculata
+179807:            NA        Hyphydrus ovatus
+179808:            NA               Corixidae
+179809:            NA          Radix balthica
+179810:            NA              Anisoptera
+           Gewaesser              Messstelle Mst_Nr_Bio Mst_Nr_Ch         Probe_Nr
+     1:         Bode               Susenburg     410103    410103           2/2004
+     2:         Bode               Susenburg     410103    410103           2/2004
+     3:         Bode               Susenburg     410103    410103           2/2004
+     4:         Bode               Susenburg     410103    410103           2/2004
+     5:         Bode               Susenburg     410103    410103           2/2004
+    ---                                                                           
+179806: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179807: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179808: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179809: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179810: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+        Teilpr_Nr      Datum        System    DV                   Taxon HK IZ
+     1:        NA 18.06.2003     Hirudinea  1017 Glossiphonia complanata  3 20
+     2:        NA 18.06.2003     Hirudinea  1000   Erpobdella octoculata  2 10
+     3:        NA 18.06.2003 Ephemeroptera   348          Baetis muticus  2 10
+     4:        NA 18.06.2003 Ephemeroptera   107          Baetis rhodani  4 65
+     5:        NA 18.06.2003 Ephemeroptera     7                  Baetis  4 65
+    ---                                                                       
+179806:        NA 20.10.1992    Gastropoda  1009    Bithynia tentaculata  2  5
+179807:        NA 20.10.1992    Coleoptera   441        Hyphydrus ovatus  3 20
+179808:        NA 20.10.1992   Heteroptera 10150               Corixidae  3 20
+179809:        NA 20.10.1992    Gastropoda  1409          Radix balthica  3 20
+179810:        NA 20.10.1992       Odonata   382              Anisoptera  2  5
+              date        sample_id site_id                   taxon ind_qm abclass
+     1: 2003-06-18           2/2004  410103 Glossiphonia complanata     20       3
+     2: 2003-06-18           2/2004  410103   Erpobdella octoculata     10       2
+     3: 2003-06-18           2/2004  410103          Baetis muticus     10       2
+     4: 2003-06-18           2/2004  410103          Baetis rhodani     65       4
+     5: 2003-06-18           2/2004  410103                  Baetis     65       4
+    ---                                                                           
+179806: 1992-10-20 GLD / 1992 / 001 N-00007    Bithynia tentaculata      5       2
+179807: 1992-10-20 GLD / 1992 / 001 N-00007        Hyphydrus ovatus     20       3
+179808: 1992-10-20 GLD / 1992 / 001 N-00007               Corixidae     20       3
+179809: 1992-10-20 GLD / 1992 / 001 N-00007          Radix balthica     20       3
+179810: 1992-10-20 GLD / 1992 / 001 N-00007              Anisoptera      5       2
+        source aqem_id taxon_aqem ind_from_class class_from_ind annot comment_clean
+     1:    GLD      NA         NA             NA             NA    NA            NA
+     2:    GLD      NA         NA             NA             NA    NA            NA
+     3:    GLD      NA         NA             NA             NA    NA            NA
+     4:    GLD      NA         NA             NA             NA    NA            NA
+     5:    GLD      NA         NA             NA             NA    NA            NA
+    ---                                                                            
+179806:    GLD      NA         NA             NA             NA    NA            NA
+179807:    GLD      NA         NA             NA             NA    NA            NA
+179808:    GLD      NA         NA             NA             NA    NA            NA
+179809:    GLD      NA         NA             NA             NA    NA            NA
+179810:    GLD      NA         NA             NA             NA    NA            NA
+        comment_other                  taxon2
+     1:            NA Glossiphonia complanata
+     2:            NA   Erpobdella octoculata
+     3:            NA          Baetis muticus
+     4:            NA          Baetis rhodani
+     5:            NA                  Baetis
+    ---                                      
+179806:            NA    Bithynia tentaculata
+179807:            NA        Hyphydrus ovatus
+179808:            NA               Corixidae
+179809:            NA          Radix balthica
+179810:            NA              Anisoptera
+           Gewaesser              Messstelle Mst_Nr_Bio Mst_Nr_Ch         Probe_Nr
+     1:         Bode               Susenburg     410103    410103           2/2004
+     2:         Bode               Susenburg     410103    410103           2/2004
+     3:         Bode               Susenburg     410103    410103           2/2004
+     4:         Bode               Susenburg     410103    410103           2/2004
+     5:         Bode               Susenburg     410103    410103           2/2004
+    ---                                                                           
+179806: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179807: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179808: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179809: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+179810: Bauerngraben Elsebecker Weg, uh Wehr    N-00007           GLD / 1992 / 001
+        Teilpr_Nr      Datum        System    DV                   Taxon HK IZ
+     1:        NA 18.06.2003     Hirudinea  1017 Glossiphonia complanata  3 20
+     2:        NA 18.06.2003     Hirudinea  1000   Erpobdella octoculata  2 10
+     3:        NA 18.06.2003 Ephemeroptera   348          Baetis muticus  2 10
+     4:        NA 18.06.2003 Ephemeroptera   107          Baetis rhodani  4 65
+     5:        NA 18.06.2003 Ephemeroptera     7                  Baetis  4 65
+    ---                                                                       
+179806:        NA 20.10.1992    Gastropoda  1009    Bithynia tentaculata  2  5
+179807:        NA 20.10.1992    Coleoptera   441        Hyphydrus ovatus  3 20
+179808:        NA 20.10.1992   Heteroptera 10150               Corixidae  3 20
+179809:        NA 20.10.1992    Gastropoda  1409          Radix balthica  3 20
+179810:        NA 20.10.1992       Odonata   382              Anisoptera  2  5
+              date        sample_id site_id                   taxon ind_qm abclass
+     1: 2003-06-18           2/2004  410103 Glossiphonia complanata     20       3
+     2: 2003-06-18           2/2004  410103   Erpobdella octoculata     10       2
+     3: 2003-06-18           2/2004  410103          Baetis muticus     10       2
+     4: 2003-06-18           2/2004  410103          Baetis rhodani     65       4
+     5: 2003-06-18           2/2004  410103                  Baetis     65       4
+    ---                                                                           
+179806: 1992-10-20 GLD / 1992 / 001 N-00007    Bithynia tentaculata      5       2
+179807: 1992-10-20 GLD / 1992 / 001 N-00007        Hyphydrus ovatus     20       3
+179808: 1992-10-20 GLD / 1992 / 001 N-00007               Corixidae     20       3
+179809: 1992-10-20 GLD / 1992 / 001 N-00007          Radix balthica     20       3
+179810: 1992-10-20 GLD / 1992 / 001 N-00007              Anisoptera      5       2
+        source aqem_id taxon_aqem ind_from_class class_from_ind annot comment_clean
+     1:    GLD      NA         NA             NA             NA    NA            NA
+     2:    GLD      NA         NA             NA             NA    NA            NA
+     3:    GLD      NA         NA             NA             NA    NA            NA
+     4:    GLD      NA         NA             NA             NA    NA            NA
+     5:    GLD      NA         NA             NA             NA    NA            NA
+    ---                                                                            
+179806:    GLD      NA         NA             NA             NA    NA            NA
+179807:    GLD      NA         NA             NA             NA    NA            NA
+179808:    GLD      NA         NA             NA             NA    NA            NA
+179809:    GLD      NA         NA             NA             NA    NA            NA
+179810:    GLD      NA         NA             NA             NA    NA            NA
+        comment_other                  taxon2
+     1:            NA Glossiphonia complanata
+     2:            NA   Erpobdella octoculata
+     3:            NA          Baetis muticus
+     4:            NA          Baetis rhodani
+     5:            NA                  Baetis
+    ---                                      
+179806:            NA    Bithynia tentaculata
+179807:            NA        Hyphydrus ovatus
+179808:            NA               Corixidae
+179809:            NA          Radix balthica
+179810:            NA              Anisoptera

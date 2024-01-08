@@ -1,7 +1,7 @@
 ### --- Clean pesticide data from Hesse --- ### 
 
 #       written: 22.11.2022
-# last modified: 22.11.2022
+# last modified: 04.10.2023 (add sample_medium)
 #       Project: PARC - Pesticide data 
 #       Purpose: Clean pesticide data from Hesse
 
@@ -26,19 +26,23 @@ if (file.exists("data/variables.rds")){
 
 # prepare data  ---------------------------------------------------------------------
 
-# - remove observations below LOQ 
-measurements %<>% dplyr::filter(is.na(PARAMETER_VORZEICHEN))
+setDT(measurements)
+measurements[, PARAMETER_WERT := as.character(PARAMETER_WERT)]
+measurements[!is.na(PARAMETER_VORZEICHEN), PARAMETER_WERT := "< LOQ"]
 
 data <- 
         data.table(
                 site_id =as.numeric(measurements$MESSSTELLEN_ID), 
                 sample_id = measurements$PROBEN_NR,
+                sample_medium = measurements$PROBEN_TYP,
                 date = measurements$PROBENAHME_DATUM, 
                 compound = measurements$PARAMETER_NAME,
                 concentration = measurements$PARAMETER_WERT,
                 measurement_unit = measurements$EINHEIT,
                 LOQ           = measurements$UNTERE_BESTIMMUNGSGRENZE
         )
+
+data[sample_medium == "Original", sample_medium := "water"]
 
 # - fix date variable 
 data[, date := as_date(ymd_hms(date))]
@@ -53,8 +57,8 @@ sites %<>%
 setDT(sites)
 data <- data[sites, on = "site_id"]
 
-sites <- unique(data, by = "site_id") |> st_as_sf(coords = c("x.coord", "y.coord"), crs = data$epsg[1])
-mapview(sites)
+#sites <- unique(data, by = "site_id") |> st_as_sf(coords = c("x.coord", "y.coord"), crs = data$epsg[1])
+#mapview(sites)
 
 source("R/harmonize_variables.R")
 sort(variables)

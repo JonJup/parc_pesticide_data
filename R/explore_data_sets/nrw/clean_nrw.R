@@ -71,10 +71,10 @@ data3 <- data.table(
 data <- rbindlist(list(data1, data2, data3))
 data[, data.set := "nrw"]
 data[, epsg := 25832]
-data <- data[!str_detect(concentration, "<")]
+data <- data[str_detect(concentration, "<"), concentration := "< LOQ"]
 data <- data[concentration != "qualitativ: negativ"]
 data[, concentration := str_replace(concentration, ",", "\\.")]
-data[, concentration := as.numeric(concentration)]
+#data[, concentration := as.numeric(concentration)]
 source("R/harmonize_variables.R")
 data <- data[!is.na(x.coord) & !is.na(y.coord)]
 # save data -------------------------------------------

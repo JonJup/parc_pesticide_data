@@ -1,7 +1,7 @@
 ### --- Clean pesticide data from Brandenburg --- ### 
 
 #       written: 18.11.2022
-# last modified: 18.11.2022
+# last modified: 08.12.2022
 #       Project: PARC - Pesticide data 
 #       Purpose: Clean pesticide data from Brandenburg
 
@@ -37,6 +37,9 @@ data[, data.set := "brandenburg"]
 data[, epsg := 25833]
 source("R/harmonize_variables.R")
 data <- data[!is.na(x.coord) & !is.na(y.coord)]
+
+# - check LOQ 
+data[, sum(concentration<LOQ)]
 
 # save data -------------------------------------------
 saveRDS(data, "data/bandenburg/pesticide_data_brandenburg_clean.rds")
